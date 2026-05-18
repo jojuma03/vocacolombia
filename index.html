@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Orientación Vocacional">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="orientacion_vocacional">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <title>Orientación Vocacional</title>
+  <link rel="manifest" href="manifest.json">
+  <script>
+    const serviceWorkerVersion = "2514051915";
+  </script>
+  <script src="flutter.js" defer></script>
+</head>
+<body>
+
+<!-- Flutter loader -->
+<script>
+  window.addEventListener('load', function(ev) {
+    _flutter.loader.loadEntrypoint({
+      serviceWorker: {
+        serviceWorkerVersion: serviceWorkerVersion,
+      },
+      onEntrypointLoaded: function(engineInitializer) {
+        engineInitializer.initializeEngine().then(function(appRunner) {
+          appRunner.runApp();
+        });
+      }
+    });
+  });
+</script>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<!-- Firebase config -->
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAoSZLKK31AKynYT0C7G8ci1UbYGN9CCok",
+    authDomain: "vocacolombia.firebaseapp.com",
+    projectId: "vocacolombia",
+    storageBucket: "vocacolombia.firebasestorage.app",
+    messagingSenderId: "239334239726",
+    appId: "1:239334239726:web:9e6a55cfb02a2d4b4df2ff"
+  };
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<!-- ✅ Función descarga Excel -->
+<script>
+  window.downloadExcel = function(bytes) {
+    var uint8 = new Uint8Array(bytes);
+    var blob = new Blob([uint8], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'vocacolombia_resultados.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+</script>
+
+</body>
+</html>
