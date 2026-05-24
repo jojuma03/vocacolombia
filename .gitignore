@@ -40,10 +40,9 @@ ios/Runner.xcodeproj/xcuserdata/
 .DS_Store
 Thumbs.db
 
-# Firebase (credenciales sensibles)
+# Firebase
 google-services.json
 GoogleService-Info.plist
-lib/firebase_options.dart
 
 # Backup files
 *.backup

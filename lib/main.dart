@@ -1,13 +1,23 @@
+// 📁 lib/main.dart
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'pantalla_introduccion.dart';
 
-void main() async {
+import 'firebase_options.dart';
+import 'auth/auth_gate.dart';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    // Evita crash silencioso en web si ya estaba inicializado
+    debugPrint('Firebase init error: $e');
+  }
+
   runApp(const MyApp());
 }
 
@@ -18,11 +28,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'VocaColombia',
+
       debugShowCheckedModeBanner: false,
+
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue,
+        ),
+        useMaterial3: true,
       ),
-      home: const PantallaIntroduccion(),
+
+      home: const AuthGate(),
     );
   }
 }

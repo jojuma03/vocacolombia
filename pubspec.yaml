@@ -1,43 +1,83 @@
 name: proyecto_vocacional
-description: "VocaColombia - App de orientación vocacional basada en modelo RIASEC y datos SNIES para estudiantes colombianos"
+
+description: VocaColombia - Plataforma inteligente de orientación vocacional basada en modelo RIASEC y análisis educativo para estudiantes colombianos
+
 publish_to: 'none'
+
+# =====================================================
+# 📦 VERSIÓN APP
+# =====================================================
+
 version: 1.0.0+1
+
+# =====================================================
+# 🛠️ ENTORNO DART / FLUTTER
+# =====================================================
 
 environment:
   sdk: '>=3.2.6 <4.0.0'
 
+# =====================================================
+# 📚 DEPENDENCIAS
+# =====================================================
+
 dependencies:
   flutter:
     sdk: flutter
+
+  # =====================================================
+  # 🎨 UI
+  # =====================================================
+
   cupertino_icons: ^1.0.2
 
-  # 📄 PDFs
+  # =====================================================
+  # 🔥 FIREBASE
+  # =====================================================
+
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.17.8
+  cloud_firestore: ^4.15.8
+  firebase_storage: ^11.6.0
+
+  # =====================================================
+  # 📊 GRÁFICAS Y ANALÍTICA
+  # =====================================================
+
+  fl_chart: ^0.66.2
+
+  # =====================================================
+  # 📄 PDF Y EXPORTACIÓN
+  # =====================================================
+
   pdf: ^3.10.8
   printing: ^5.11.1
   path_provider: ^2.1.1
-
-  # 🔥 Firebase
-  firebase_core: ^2.24.2
-  firebase_auth: ^4.16.0
-  cloud_firestore: ^4.14.0
-  firebase_storage: ^11.6.0
-
-  # 📊 Excel
   excel: ^4.0.2
 
-  # 📈 Graficas (compatible con Flutter 3.16)
-  fl_chart: ^0.63.0
+  # =====================================================
+  # 🛠️ UTILIDADES
+  # =====================================================
 
-  # 🛠️ Utilidades
   intl: ^0.19.0
   fluttertoast: ^8.2.4
+
+# =====================================================
+# 🧪 DEPENDENCIAS DESARROLLO
+# =====================================================
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
   flutter_lints: ^2.0.0
+
+# =====================================================
+# 🎨 CONFIGURACIÓN FLUTTER
+# =====================================================
 
 flutter:
   uses-material-design: true
+
   assets:
     - assets/images/logo_logoterapia.png

@@ -1,10 +1,13 @@
 // 📁 lib/test_screen.dart
+
 import 'package:flutter/material.dart';
-import 'data/preguntas_data.dart';
+
 import 'data/carreras_data.dart';
+import 'data/preguntas_data.dart';
 import 'pdf_generator.dart';
+import 'results_history_screen.dart';
 import 'services.dart';
-import 'services/scoring_service.dart';
+import 'utils/resultado_riasec.dart';
 
 class TestScreen extends StatefulWidget {
   final Map<String, String> estudiante;
@@ -15,13 +18,14 @@ class TestScreen extends StatefulWidget {
   });
 
   @override
-  State<TestScreen> createState() => _TestScreenState();
+  State<TestScreen> createState() =>
+      _TestScreenState();
 }
 
 class _TestScreenState extends State<TestScreen> {
   int preguntaActual = 0;
 
-  Map<String, int> puntajes = {
+  final Map<String, int> puntajes = {
     'R': 0,
     'I': 0,
     'A': 0,
@@ -30,8 +34,11 @@ class _TestScreenState extends State<TestScreen> {
     'C': 0,
   };
 
-  bool _isLoading = false;
   bool _isAuthorized = false;
+
+  // ======================================================
+  // 🔥 INIT
+  // ======================================================
 
   @override
   void initState() {
@@ -39,44 +46,66 @@ class _TestScreenState extends State<TestScreen> {
     _validarAcceso();
   }
 
+  // ======================================================
+  // 🔥 VALIDAR ACCESO
+  // ======================================================
+
   void _validarAcceso() {
-    final nombre = widget.estudiante['nombre']?.trim();
-    final correo = widget.estudiante['correo']?.trim();
+    final nombre =
+    widget.estudiante['nombre']?.trim();
+
+    final correo =
+    widget.estudiante['correo']?.trim();
 
     if (nombre != null &&
         nombre.isNotEmpty &&
         correo != null &&
         correo.isNotEmpty &&
-        RegExp(r'^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$').hasMatch(correo)) {
+        RegExp(
+          r'^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$',
+        ).hasMatch(correo)) {
       setState(() {
         _isAuthorized = true;
       });
     } else {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
+          ScaffoldMessenger.of(context)
+              .showSnackBar(
             const SnackBar(
-              content: Text('⚠️ Datos incompletos. Por favor, regístrate nuevamente.'),
+              content: Text(
+                '⚠️ Datos incompletos. Regístrate nuevamente.',
+              ),
               backgroundColor: Colors.red,
-              duration: Duration(seconds: 3),
             ),
           );
-          Navigator.of(context).popUntil((route) => route.isFirst);
+
+          Navigator.of(context)
+              .popUntil(
+                (route) => route.isFirst,
+          );
         }
       });
     }
   }
 
+  // ======================================================
+  // 🔥 RESPONDER
+  // ======================================================
+
   void responder(int puntos) {
     if (!_isAuthorized) return;
-    if (preguntaActual >= preguntasBase.length) return;
 
-    String riasec = preguntasBase[preguntaActual].riasec;
+    final riasec =
+        preguntasBase[preguntaActual].riasec;
 
     setState(() {
-      puntajes[riasec] = (puntajes[riasec] ?? 0) + puntos;
+      puntajes[riasec] =
+          (puntajes[riasec] ?? 0) + puntos;
 
-      if (preguntaActual < preguntasBase.length - 1) {
+      if (preguntaActual <
+          preguntasBase.length - 1) {
         preguntaActual++;
       } else {
         mostrarResultados();
@@ -84,45 +113,95 @@ class _TestScreenState extends State<TestScreen> {
     });
   }
 
-    void mostrarResultados() {
-    if (!_isAuthorized) return;
+  // ======================================================
+  // 🔥 MOSTRAR RESULTADOS
+  // ======================================================
 
-    final scoring = ScoringService();
-    final resultado = scoring.calcularResultados(puntajes);
+  void mostrarResultados() {
+    final ordenados =
+    puntajes.entries.toList()
+      ..sort(
+            (a, b) =>
+            b.value.compareTo(a.value),
+      );
 
-    final recomendadas = resultado.carrerasTop.map((r) => r.carrera).toList();
-    final descripcionPerfil = resultado.descripcionPerfil;
+    final perfilPrimario =
+        ordenados[0].key;
+
+    final perfilSecundario =
+        ordenados[1].key;
+
+    final resultado =
+    generarResultadoVocacional(
+      principal: perfilPrimario,
+      secundario: perfilSecundario,
+    );
+
+    final descripcionPerfil =
+        resultado.descripcion;
+
+    final recomendadas =
+    getCarrerasPorRiasec(
+      perfilPrimario,
+    );
 
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => _ResultadoDialog(
-        nombre: widget.estudiante['nombre'] ?? 'Anonimo',
-        institucion: widget.estudiante['institucion'] ?? 'Institucion',
-        correo: widget.estudiante['correo'] ?? 'correo@ejemplo.com',
-        perfilGanador: resultado.perfilPrimario,
-        nombrePerfil: '${_nombrePerfil(resultado.perfilPrimario)} + ${_nombrePerfil(resultado.perfilSecundario)}',
-        descripcionPerfil: descripcionPerfil,
+
+      builder: (context) => ResultadoDialog(
+        nombre:
+        widget.estudiante['nombre'] ??
+            'Anónimo',
+
+        institucion:
+        widget.estudiante[
+        'institucion'] ??
+            'Institución',
+
+        correo:
+        widget.estudiante['correo'] ??
+            'correo@ejemplo.com',
+
+        perfilGanador: perfilPrimario,
+
+        nombrePerfil:
+        '${_nombrePerfil(perfilPrimario)} + ${_nombrePerfil(perfilSecundario)}',
+
+        descripcionPerfil:
+        descripcionPerfil,
+
         recomendadas: recomendadas,
+
         puntajes: puntajes,
+
         onRepetir: () {
           setState(() {
             preguntaActual = 0;
-            puntajes.updateAll((key, value) => 0);
+
+            puntajes.updateAll(
+                  (key, value) => 0,
+            );
           });
+
           Navigator.pop(context);
         },
+
         onInicio: () {
-          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).popUntil(
+                (route) => route.isFirst,
+          );
         },
       ),
     );
   }
 
-
+  // ======================================================
+  // 🔥 NOMBRE PERFIL
+  // ======================================================
 
   String _nombrePerfil(String codigo) {
-    const mapas = {
+    const perfiles = {
       'R': 'Realista',
       'I': 'Investigador',
       'A': 'Artístico',
@@ -130,89 +209,123 @@ class _TestScreenState extends State<TestScreen> {
       'E': 'Emprendedor',
       'C': 'Convencional',
     };
-    return mapas[codigo] ?? codigo;
+
+    return perfiles[codigo] ?? codigo;
   }
+
+  // ======================================================
+  // 🔥 BOTÓN RESPUESTA
+  // ======================================================
+
+  Widget _buildRespuestaButton(
+      String texto,
+      int valor,
+      Color color,
+      ) {
+    return ElevatedButton(
+      onPressed: () => responder(valor),
+
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        foregroundColor: Colors.white,
+        minimumSize:
+        const Size(double.infinity, 55),
+      ),
+
+      child: Text(
+        texto,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  // ======================================================
+  // 🔥 UI PRINCIPAL
+  // ======================================================
 
   @override
   Widget build(BuildContext context) {
     if (!_isAuthorized) {
       return const Scaffold(
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(height: 20),
-              Text('🔐 Verificando acceso...'),
-            ],
-          ),
+          child: CircularProgressIndicator(),
         ),
       );
     }
 
-    if (preguntasBase.isEmpty) {
-      return const Scaffold(
-        body: Center(child: Text("Cargando preguntas...")),
-      );
-    }
-
-    final pregunta = preguntasBase[preguntaActual];
+    final pregunta =
+    preguntasBase[preguntaActual];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pregunta ${preguntaActual + 1}/${preguntasBase.length}'),
-        backgroundColor: Colors.blue[800],
-        foregroundColor: Colors.white,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              LinearProgressIndicator(
-                value: (preguntaActual + 1) / preguntasBase.length,
-                backgroundColor: Colors.grey[300],
-                valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
-              ),
-              const SizedBox(height: 50),
-              Text(
-                pregunta.texto,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 50),
-              _buildRespuestaButton('Poco', 1, Colors.orange),
-              const SizedBox(height: 10),
-              _buildRespuestaButton('Regular', 2, Colors.blue),
-              const SizedBox(height: 10),
-              _buildRespuestaButton('Mucho', 3, Colors.green),
-              const SizedBox(height: 30),
-            ],
-          ),
+        title: Text(
+          'Pregunta ${preguntaActual + 1}/${preguntasBase.length}',
         ),
-      ),
-    );
-  }
-
-  Widget _buildRespuestaButton(String texto, int valor, Color color) {
-    return ElevatedButton(
-      onPressed: _isAuthorized ? () => responder(valor) : null,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
+        backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
-        minimumSize: const Size(double.infinity, 50),
       ),
-      child: Text(
-        texto,
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+
+        child: Column(
+          children: [
+            LinearProgressIndicator(
+              value:
+              (preguntaActual + 1) /
+                  preguntasBase.length,
+            ),
+
+            const SizedBox(height: 40),
+
+            Text(
+              pregunta.texto,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 40),
+
+            _buildRespuestaButton(
+              'Poco',
+              1,
+              Colors.orange,
+            ),
+
+            const SizedBox(height: 15),
+
+            _buildRespuestaButton(
+              'Regular',
+              2,
+              Colors.blue,
+            ),
+
+            const SizedBox(height: 15),
+
+            _buildRespuestaButton(
+              'Mucho',
+              3,
+              Colors.green,
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-// ✅ Dialog extraído como StatefulWidget propio para manejar su estado correctamente
-class _ResultadoDialog extends StatefulWidget {
+// ======================================================
+// 🔥 DIALOG RESULTADO
+// ======================================================
+
+class ResultadoDialog
+    extends StatefulWidget {
   final String nombre;
   final String institucion;
   final String correo;
@@ -224,7 +337,8 @@ class _ResultadoDialog extends StatefulWidget {
   final VoidCallback onRepetir;
   final VoidCallback onInicio;
 
-  const _ResultadoDialog({
+  const ResultadoDialog({
+    super.key,
     required this.nombre,
     required this.institucion,
     required this.correo,
@@ -238,130 +352,199 @@ class _ResultadoDialog extends StatefulWidget {
   });
 
   @override
-  State<_ResultadoDialog> createState() => _ResultadoDialogState();
+  State<ResultadoDialog> createState() =>
+      _ResultadoDialogState();
 }
 
-class _ResultadoDialogState extends State<_ResultadoDialog> {
-  bool _isLoading = false;
+class _ResultadoDialogState
+    extends State<ResultadoDialog> {
+  bool isLoading = false;
+
+  // ======================================================
+  // 🔥 GENERAR REPORTE
+  // ======================================================
 
   Future<void> _generarReporte() async {
-    setState(() => _isLoading = true);
+    setState(() {
+      isLoading = true;
+    });
 
     try {
       await generarPDF(
         nombre: widget.nombre,
         institucion: widget.institucion,
         correo: widget.correo,
-        areaGanadora: '${widget.nombrePerfil} (${widget.perfilGanador})',
-        carreras: widget.recomendadas.map((c) => c.nombre).toList(),
+        areaGanadora:
+        '${widget.nombrePerfil} (${widget.perfilGanador})',
+        carreras: widget.recomendadas
+            .map((e) => e.nombre)
+            .toList(),
       );
 
       final db = DatabaseService();
-      final exito = await db.guardarRegistro(
+
+      await db.guardarRegistro(
         datosPersonales: {
           'nombre': widget.nombre,
-          'institucion': widget.institucion,
+          'institucion':
+          widget.institucion,
           'correo': widget.correo,
         },
+
         resultados: {
-          'perfil_riasec': widget.perfilGanador,
-          'perfil_nombre': widget.nombrePerfil,
-          'puntajes': widget.puntajes,
-          'carreras_sugeridas':
-          widget.recomendadas.map((c) => c.nombre).toList(),
+          'perfil':
+          widget.perfilGanador,
+          'perfil_nombre':
+          widget.nombrePerfil,
+          'puntajes':
+          widget.puntajes,
         },
       );
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+        ScaffoldMessenger.of(context)
+            .showSnackBar(
+          const SnackBar(
             content: Text(
-              exito
-                  ? '✅ Reporte generado y guardado en la nube'
-                  : '⚠️ PDF generado, pero no se guardó en la nube',
+              '✅ Reporte generado correctamente',
             ),
-            backgroundColor: exito ? Colors.green : Colors.orange,
           ),
         );
-        Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(context)
+            .showSnackBar(
           SnackBar(
-            content: Text('❌ Error: $e'),
-            backgroundColor: Colors.red,
+            content: Text(
+              '❌ Error: $e',
+            ),
           ),
         );
       }
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
+    }
+
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
+
+  // ======================================================
+  // 🔥 UI RESULTADO
+  // ======================================================
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('🎓 ¡Felicidades!'),
+      title: const Text(
+        '🎓 Resultado Vocacional',
+      ),
+
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
+
           children: [
-            Text('Estudiante: ${widget.nombre}'),
-            const Divider(),
-            const Text(
-              'Tu perfil predominante es:',
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
+            Text(widget.nombre),
+
+            const SizedBox(height: 10),
+
             Text(
-              '${widget.nombrePerfil} (${widget.perfilGanador})',
+              widget.nombrePerfil,
+              textAlign: TextAlign.center,
+
               style: const TextStyle(
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue,
-                fontSize: 18,
               ),
             ),
-            const SizedBox(height: 8),
+
+            const SizedBox(height: 15),
+
             Text(
               widget.descripcionPerfil,
-              style: const TextStyle(fontSize: 13, fontStyle: FontStyle.italic),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 15),
+
+            const SizedBox(height: 20),
+
             const Text(
-              'Carreras sugeridas según SNIES:',
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 5),
-            if (widget.recomendadas.isNotEmpty)
-              ...widget.recomendadas.take(5).map((c) => Text('- ${c.nombre}'))
-            else
-              const Text(
-                '⚠️ Sin carreras registradas para este perfil',
-                style: TextStyle(color: Colors.orange),
+              'Carreras sugeridas:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
               ),
-            const SizedBox(height: 15),
-            ElevatedButton.icon(
-              onPressed: _isLoading ? null : _generarReporte,
-              icon: _isLoading
-                  ? const SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(strokeWidth: 2),
-              )
-                  : const Icon(Icons.picture_as_pdf),
-              label: Text(_isLoading ? 'Procesando...' : 'Descargar Reporte PDF'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
+            ),
+
+            const SizedBox(height: 10),
+
+            ...widget.recomendadas
+                .take(5)
+                .map(
+                  (carrera) => Padding(
+                padding:
+                const EdgeInsets.symmetric(
+                  vertical: 2,
+                ),
+
+                child: Text(
+                  '• ${carrera.nombre}',
+                ),
               ),
             ),
           ],
         ),
       ),
+
       actions: [
-        TextButton(onPressed: widget.onRepetir, child: const Text('Repetir')),
-        TextButton(onPressed: widget.onInicio, child: const Text('Inicio')),
+        TextButton(
+          onPressed: widget.onInicio,
+          child: const Text('Inicio'),
+        ),
+
+        TextButton(
+          onPressed: widget.onRepetir,
+          child: const Text('Repetir'),
+        ),
+
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) =>
+                const ResultsHistoryScreen(),
+              ),
+            );
+          },
+          child: const Text('Historial'),
+        ),
+
+        ElevatedButton.icon(
+          onPressed:
+          isLoading ? null : _generarReporte,
+
+          icon: isLoading
+              ? const SizedBox(
+            width: 18,
+            height: 18,
+            child:
+            CircularProgressIndicator(
+              strokeWidth: 2,
+            ),
+          )
+              : const Icon(
+            Icons.picture_as_pdf,
+          ),
+
+          label: Text(
+            isLoading
+                ? 'Generando...'
+                : 'PDF',
+          ),
+        ),
       ],
     );
   }

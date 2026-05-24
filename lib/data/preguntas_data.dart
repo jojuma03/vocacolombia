@@ -1,148 +1,564 @@
 // 📁 lib/data/preguntas_data.dart
-// Banco de preguntas RIASEC - VocaColombia
-// ✅ Autocontenido: sin dependencias externas de modelos
+// BANCO PROFESIONAL RIASEC + INTELIGENCIAS MÚLTIPLES
+// VocaColombia 2026
+// Versión fortalecida y equilibrada psicométricamente
 
-// ─────────────────────────────────────────────────────────────
-// ✅ MODELO PREGUNTA (definido aquí para evitar errores de import)
-// ─────────────────────────────────────────────────────────────
-class Pregunta {
-  final String texto;
-  final String riasec; // 'R', 'I', 'A', 'S', 'E', 'C'
+import '../models_pregunta.dart';
 
-  const Pregunta({
-    required this.texto,
-    required this.riasec,
-  });
-}
+// ─────────────────────────────────────────────
+// ✅ BANCO DE PREGUNTAS PROFESIONAL
+// 120 preguntas equilibradas
+//
+// 20 REALISTA
+// 20 INVESTIGADOR
+// 20 ARTÍSTICO
+// 20 SOCIAL
+// 20 EMPRENDEDOR
+// 20 CONVENCIONAL
+//
+// Incluye:
+// ✅ Inteligencias múltiples
+// ✅ Intereses
+// ✅ Habilidades
+// ✅ Creatividad
+// ✅ Liderazgo
+// ✅ Pensamiento lógico
+// ✅ Sensibilidad social
+// ✅ Organización
+// ─────────────────────────────────────────────
 
-// ─────────────────────────────────────────────────────────────
-// ✅ BANCO DE 100 PREGUNTAS EQUILIBRADAS POR DIMENSIÓN RIASEC
-// ─────────────────────────────────────────────────────────────
 final List<Pregunta> preguntasBase = [
-  // 🔧 REALISTA (R) - 17 preguntas
-  const Pregunta(texto: '¿Disfrutas armar o reparar computadoras y aparatos?', riasec: 'R'),
-  const Pregunta(texto: '¿Te gusta trabajar con herramientas manuales o eléctricas?', riasec: 'R'),
-  const Pregunta(texto: '¿Prefieres actividades al aire libre o en entornos naturales?', riasec: 'R'),
-  const Pregunta(texto: '¿Te interesa la mecánica de vehículos o maquinaria pesada?', riasec: 'R'),
-  const Pregunta(texto: '¿Disfrutas construyendo cosas con tus manos (madera, metal, etc.)?', riasec: 'R'),
-  const Pregunta(texto: '¿Te gustaría trabajar en agricultura, ganadería o recursos naturales?', riasec: 'R'),
-  const Pregunta(texto: '¿Te atrae la ingeniería civil o la construcción de infraestructuras?', riasec: 'R'),
-  const Pregunta(texto: '¿Te interesa la instrumentación quirúrgica o equipos médicos?', riasec: 'R'),
-  const Pregunta(texto: '¿Te gusta la física aplicada y entender cómo funcionan las máquinas?', riasec: 'R'),
-  const Pregunta(texto: '¿Te ves trabajando en mantenimiento industrial o técnico?', riasec: 'R'),
-  const Pregunta(texto: '¿Te interesa la automatización de procesos con robots o PLCs?', riasec: 'R'),
-  const Pregunta(texto: '¿Te gustaría especializarte en energías renovables o instalaciones?', riasec: 'R'),
-  const Pregunta(texto: '¿Disfrutas leyendo manuales técnicos o diagramas de instalación?', riasec: 'R'),
-  const Pregunta(texto: '¿Te atrae la ingeniería aeroespacial o la mecánica de vuelo?', riasec: 'R'),
-  const Pregunta(texto: '¿Te interesa la topografía, cartografía o trabajos de campo?', riasec: 'R'),
-  const Pregunta(texto: '¿Te gustaría trabajar en seguridad industrial o prevención de riesgos?', riasec: 'R'),
-  const Pregunta(texto: '¿Prefieres soluciones concretas y prácticas antes que teorías abstractas?', riasec: 'R'),
 
-  // 🔬 INVESTIGADOR (I) - 17 preguntas
-  const Pregunta(texto: '¿Te gusta resolver acertijos lógicos o problemas matemáticos complejos?', riasec: 'I'),
-  const Pregunta(texto: '¿Te interesa saber cómo funcionan las aplicaciones y sistemas por dentro?', riasec: 'I'),
-  const Pregunta(texto: '¿Pasas tiempo investigando sobre ciencia, tecnología o descubrimientos?', riasec: 'I'),
-  const Pregunta(texto: '¿Te gustaría aprender a programar software, algoritmos o inteligencia artificial?', riasec: 'I'),
-  const Pregunta(texto: '¿Disfrutas analizando por qué las cosas fallan y cómo mejorarlas?', riasec: 'I'),
-  const Pregunta(texto: '¿Te interesa la seguridad informática, criptografía o ciberseguridad?', riasec: 'I'),
-  const Pregunta(texto: '¿Te atrae la investigación científica en laboratorios o universidades?', riasec: 'I'),
-  const Pregunta(texto: '¿Te gustaría trabajar en biotecnología, genética o ciencias biomédicas?', riasec: 'I'),
-  const Pregunta(texto: '¿Te interesa la astronomía, física teórica o ciencias del universo?', riasec: 'I'),
-  const Pregunta(texto: '¿Disfrutas estudiando anatomía, fisiología o procesos biológicos?', riasec: 'I'),
-  const Pregunta(texto: '¿Te interesa la farmacología y el mecanismo de acción de los medicamentos?', riasec: 'I'),
-  const Pregunta(texto: '¿Te gustaría investigar curas para enfermedades o nuevos tratamientos?', riasec: 'I'),
-  const Pregunta(texto: '¿Te atrae la sociología, antropología o investigación del comportamiento?', riasec: 'I'),
-  const Pregunta(texto: '¿Te interesa la filosofía, epistemología o las grandes preguntas del conocimiento?', riasec: 'I'),
-  const Pregunta(texto: '¿Disfrutas analizando datos, estadísticas o gráficos de rendimiento?', riasec: 'I'),
-  const Pregunta(texto: '¿Te gustaría trabajar en arqueología, paleontología o ciencias históricas?', riasec: 'I'),
-  const Pregunta(texto: '¿Prefieres entender las causas profundas antes de actuar?', riasec: 'I'),
+  // ═══════════════════════════════════════════
+  // 🔧 REALISTA (R) - 20
+  // ═══════════════════════════════════════════
 
-  // 🎨 ARTÍSTICO (A) - 17 preguntas
-  const Pregunta(texto: '¿Pasas tiempo dibujando, pintando, diseñando o creando arte visual?', riasec: 'A'),
-  const Pregunta(texto: '¿Te gusta expresar tus ideas de forma visual, musical o escrita?', riasec: 'A'),
-  const Pregunta(texto: '¿Te interesa la fotografía, el video, el cine o la producción audiovisual?', riasec: 'A'),
-  const Pregunta(texto: '¿Prefieres proyectos donde puedas innovar libremente sin reglas estrictas?', riasec: 'A'),
-  const Pregunta(texto: '¿Te gustaría diseñar ropa, accesorios, moda o tendencias estilísticas?', riasec: 'A'),
-  const Pregunta(texto: '¿Te atrae la arquitectura, diseño de interiores o decoración de espacios?', riasec: 'A'),
-  const Pregunta(texto: '¿Te gusta tocar un instrumento, componer canciones o producir música?', riasec: 'A'),
-  const Pregunta(texto: '¿Te interesa el diseño gráfico, branding o comunicación visual?', riasec: 'A'),
-  const Pregunta(texto: '¿Te gustaría crear animaciones, efectos visuales o mundos virtuales?', riasec: 'A'),
-  const Pregunta(texto: '¿Eres sensible a los colores, las formas, las texturas y la estética?', riasec: 'A'),
-  const Pregunta(texto: '¿Te interesa el teatro, la actuación, la danza o las artes escénicas?', riasec: 'A'),
-  const Pregunta(texto: '¿Te gustaría diseñar videojuegos, experiencias interactivas o narrativa digital?', riasec: 'A'),
-  const Pregunta(texto: '¿Disfrutas visitando museos, galerías, conciertos o eventos culturales?', riasec: 'A'),
-  const Pregunta(texto: '¿Te interesa la publicidad creativa, storytelling o marketing de contenidos?', riasec: 'A'),
-  const Pregunta(texto: '¿Te gustaría restaurar obras de arte, patrimonio cultural o artesanías?', riasec: 'A'),
-  const Pregunta(texto: '¿Eres imaginativo, sueñas despierto y tienes ideas originales frecuentemente?', riasec: 'A'),
-  const Pregunta(texto: '¿Disfrutas escribiendo cuentos, poesía, guiones o contenido creativo?', riasec: 'A'),
+  const Pregunta(
+    texto: '¿Disfrutas reparar aparatos electrónicos o mecánicos?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta trabajar con herramientas manuales o eléctricas?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Prefieres actividades prácticas antes que teóricas?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa entender cómo funcionan las máquinas?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas construir objetos o estructuras con tus manos?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría trabajar en ingeniería, construcción o mecánica?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te atraen los trabajos de campo y actividades al aire libre?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la robótica o automatización industrial?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría trabajar con motores, vehículos o maquinaria?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta resolver problemas técnicos concretos?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la energía solar, eólica o tecnologías sostenibles?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Prefieres aprender haciendo en lugar de solo leer?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te atraen los laboratorios técnicos y talleres prácticos?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría participar en proyectos de infraestructura?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa el mantenimiento de sistemas eléctricos?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas actividades relacionadas con agricultura o naturaleza?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te consideras una persona práctica y resolutiva?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta seguir procesos técnicos paso a paso?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te atrae el diseño y ensamblaje de dispositivos?',
+    riasec: 'R',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría trabajar en aviación, mecánica o electrónica?',
+    riasec: 'R',
+  ),
 
-  // 🤝 SOCIAL (S) - 17 preguntas
-  const Pregunta(texto: '¿Sientes empatía cuando alguien te cuenta que está pasando por una dificultad?', riasec: 'S'),
-  const Pregunta(texto: '¿Te gustaría ayudar a las personas a mejorar su salud, bienestar o calidad de vida?', riasec: 'S'),
-  const Pregunta(texto: '¿Podrías manejar situaciones de estrés emocional o urgencia con calma y paciencia?', riasec: 'S'),
-  const Pregunta(texto: '¿Te interesa la psicología, salud mental o el comportamiento humano?', riasec: 'S'),
-  const Pregunta(texto: '¿No te asusta trabajar en contacto directo con pacientes o personas vulnerables?', riasec: 'S'),
-  const Pregunta(texto: '¿Te interesa la nutrición comunitaria y cómo los hábitos afectan la salud colectiva?', riasec: 'S'),
-  const Pregunta(texto: '¿Te gusta cuidar, educar o acompañar a niños, adultos mayores o animales?', riasec: 'S'),
-  const Pregunta(texto: '¿Eres paciente al explicar, enseñar o guiar a otras personas en su aprendizaje?', riasec: 'S'),
-  const Pregunta(texto: '¿Te gustaría trabajar en hospitales, clínicas, colegios o centros comunitarios?', riasec: 'S'),
-  const Pregunta(texto: '¿Te atrae la odontología, enfermería, terapia ocupacional o profesiones de cuidado?', riasec: 'S'),
-  const Pregunta(texto: '¿Te gustaría ayudar en rehabilitación física, emocional o social de personas?', riasec: 'S'),
-  const Pregunta(texto: '¿Te interesa trabajar en prevención de enfermedades o promoción de salud pública?', riasec: 'S'),
-  const Pregunta(texto: '¿Te gustaría ayudar a personas en situaciones de vulnerabilidad o exclusión social?', riasec: 'S'),
-  const Pregunta(texto: '¿Eres bueno escuchando activamente y dando consejos empáticos a tus amigos?', riasec: 'S'),
-  const Pregunta(texto: '¿Te interesa la sociología, trabajo social o intervención comunitaria?', riasec: 'S'),
-  const Pregunta(texto: '¿Te gustaría ser profesor, educador, orientador o formador de personas?', riasec: 'S'),
-  const Pregunta(texto: '¿Te ves liderando o participando en movimientos sociales, comunitarios o de ayuda?', riasec: 'S'),
+  // ═══════════════════════════════════════════
+  // 🔬 INVESTIGADOR (I) - 20
+  // ═══════════════════════════════════════════
 
-  // 💼 EMPRENDEDOR (E) - 16 preguntas
-  const Pregunta(texto: '¿Te gusta organizar eventos, liderar grupos o coordinar equipos de trabajo?', riasec: 'E'),
-  const Pregunta(texto: '¿Te interesa el dinero, las ventas, el emprendimiento o la economía global?', riasec: 'E'),
-  const Pregunta(texto: '¿Te ves emprendiendo, creando o manejando tu propia empresa o proyecto?', riasec: 'E'),
-  const Pregunta(texto: '¿Eres bueno negociando, persuadiendo o convenciendo a otros para lograr objetivos?', riasec: 'E'),
-  const Pregunta(texto: '¿Te gusta establecer metas ambiciosas y competir para alcanzarlas?', riasec: 'E'),
-  const Pregunta(texto: '¿Te interesa el marketing digital, ventas o estrategias de crecimiento de negocios?', riasec: 'E'),
-  const Pregunta(texto: '¿Te atrae el mundo de la bolsa, las inversiones, finanzas corporativas o capital de riesgo?', riasec: 'E'),
-  const Pregunta(texto: '¿Te gustaría trabajar en gestión comercial, desarrollo de negocios o expansión de mercados?', riasec: 'E'),
-  const Pregunta(texto: '¿Eres ambicioso, te gusta tomar decisiones rápidas y asumir riesgos calculados?', riasec: 'E'),
-  const Pregunta(texto: '¿Te gustaría trabajar en una multinacional, banco, consultora o startup?', riasec: 'E'),
-  const Pregunta(texto: '¿Te interesa el comercio internacional, importación/exportación o negocios globales?', riasec: 'E'),
-  const Pregunta(texto: '¿Te interesa la gerencia de proyectos, liderazgo organizacional o gestión de equipos?', riasec: 'E'),
-  const Pregunta(texto: '¿Te gustaría mejorar procesos empresariales para aumentar eficiencia y rentabilidad?', riasec: 'E'),
-  const Pregunta(texto: '¿Te ves dando charlas motivacionales, capacitaciones o formando líderes?', riasec: 'E'),
-  const Pregunta(texto: '¿Te interesa la administración de hoteles, turismo, eventos o servicios?', riasec: 'E'),
-  const Pregunta(texto: '¿Te gusta identificar oportunidades de negocio donde otros no las ven?', riasec: 'E'),
+  const Pregunta(
+    texto: '¿Te gusta investigar temas complejos por curiosidad?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas resolver problemas matemáticos o lógicos?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la ciencia y los descubrimientos científicos?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría desarrollar software o inteligencia artificial?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas analizar datos y estadísticas?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa comprender cómo funciona el cuerpo humano?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te atrae la investigación médica o biotecnológica?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta formular hipótesis y buscar respuestas?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la astronomía o el universo?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas aprendiendo conceptos nuevos constantemente?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la programación y desarrollo tecnológico?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Prefieres comprender profundamente antes de actuar?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te atraen los laboratorios científicos?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta investigar el comportamiento humano?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te interesan las teorías filosóficas o científicas?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te atrae la ciberseguridad o criptografía?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas identificar patrones o relaciones complejas?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa descubrir cómo mejorar procesos o sistemas?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría participar en investigaciones universitarias?',
+    riasec: 'I',
+  ),
+  const Pregunta(
+    texto: '¿Te consideras analítico y observador?',
+    riasec: 'I',
+  ),
 
-  // 📋 CONVENCIONAL (C) - 16 preguntas
-  const Pregunta(texto: '¿Prefieres trabajar con datos, números, registros y información sistemática?', riasec: 'C'),
-  const Pregunta(texto: '¿Eres bueno organizando información, archivos o bases de datos de manera ordenada?', riasec: 'C'),
-  const Pregunta(texto: '¿Te gusta seguir procedimientos, protocolos o manuales de forma meticulosa?', riasec: 'C'),
-  const Pregunta(texto: '¿Te interesa la contabilidad, impuestos, auditoría o control financiero?', riasec: 'C'),
-  const Pregunta(texto: '¿Eres detallista al revisar errores en textos, códigos, informes o documentos?', riasec: 'C'),
-  const Pregunta(texto: '¿Te gusta llevar el control de gastos, presupuestos, inventarios o cronogramas?', riasec: 'C'),
-  const Pregunta(texto: '¿Te interesa la logística, cadena de suministro, operaciones o procesos administrativos?', riasec: 'C'),
-  const Pregunta(texto: '¿Te atrae el derecho, normas, regulaciones o aspectos legales de las organizaciones?', riasec: 'C'),
-  const Pregunta(texto: '¿Eres organizado con los horarios, rutinas, agendas y planificación a largo plazo?', riasec: 'C'),
-  const Pregunta(texto: '¿Te gustaría trabajar en oficinas, instituciones públicas, juzgados o entidades reguladoras?', riasec: 'C'),
-  const Pregunta(texto: '¿Te interesa la gestión documental, archivo, bibliotecología o sistemas de información?', riasec: 'C'),
-  const Pregunta(texto: '¿Te gusta analizar gráficos, reportes, KPIs o indicadores de gestión?', riasec: 'C'),
-  const Pregunta(texto: '¿Te interesa la administración pública, gestión estatal o políticas institucionales?', riasec: 'C'),
-  const Pregunta(texto: '¿Te atrae el secretariado ejecutivo, asistencia administrativa o soporte organizacional?', riasec: 'C'),
-  const Pregunta(texto: '¿Eres preciso, metódico y prefieres claridad antes que ambigüedad en tus tareas?', riasec: 'C'),
-  const Pregunta(texto: '¿Te gustaría especializarte en control de calidad, cumplimiento normativo o auditoría?', riasec: 'C'),
+  // ═══════════════════════════════════════════
+  // 🎨 ARTÍSTICO (A) - 20
+  // ═══════════════════════════════════════════
+
+  const Pregunta(
+    texto: '¿Disfrutas expresarte mediante dibujo, música o escritura?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta crear ideas originales o innovadoras?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa el diseño gráfico o audiovisual?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta escribir historias, poesía o contenido creativo?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te atrae la fotografía, cine o producción audiovisual?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas tocar instrumentos o producir música?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa el teatro, danza o actuación?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Prefieres ambientes flexibles y creativos?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te atrae la arquitectura o diseño de espacios?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta experimentar nuevas formas de expresión?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te consideras imaginativo y creativo?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la moda y tendencias estéticas?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas observar colores, texturas y detalles visuales?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría trabajar en publicidad o storytelling?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te atrae el diseño de videojuegos o animación?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta improvisar o crear nuevas posibilidades?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa el arte digital y contenidos interactivos?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas asistir a eventos culturales o artísticos?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta expresar emociones mediante el arte?',
+    riasec: 'A',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría trabajar en industrias creativas?',
+    riasec: 'A',
+  ),
+
+  // ═══════════════════════════════════════════
+  // 🤝 SOCIAL (S) - 20
+  // ═══════════════════════════════════════════
+
+  const Pregunta(
+    texto: '¿Te gusta ayudar a las personas cuando tienen dificultades?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas enseñar o explicar temas a otros?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la psicología o comportamiento humano?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría trabajar en educación o salud?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te consideras empático y buen oyente?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta trabajar en equipo y cooperar?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa mejorar la calidad de vida de otros?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría participar en proyectos comunitarios?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas motivar y apoyar a otras personas?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te atrae el trabajo social o comunitario?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa orientar o aconsejar personas?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría trabajar con niños o adultos mayores?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la salud mental y emocional?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta escuchar activamente a los demás?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te consideras paciente y comprensivo?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa promover la inclusión y diversidad?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría trabajar en fundaciones o ONG?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la orientación vocacional o educativa?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas mediar conflictos o apoyar acuerdos?',
+    riasec: 'S',
+  ),
+  const Pregunta(
+    texto: '¿Te motiva generar impacto positivo en la sociedad?',
+    riasec: 'S',
+  ),
+
+  // ═══════════════════════════════════════════
+  // 💼 EMPRENDEDOR (E) - 20
+  // ═══════════════════════════════════════════
+
+  const Pregunta(
+    texto: '¿Te gusta liderar grupos o proyectos?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa crear empresas o emprendimientos?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta persuadir o convencer a otras personas?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te atraen las ventas y el marketing?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas asumir retos y tomar decisiones rápidas?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa el mundo financiero y empresarial?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría dirigir equipos de trabajo?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te motiva alcanzar metas ambiciosas?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa negociar y cerrar acuerdos?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría trabajar en comercio internacional?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta identificar oportunidades de negocio?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te consideras competitivo y orientado al logro?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la administración de empresas?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas hablar en público o presentar ideas?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría liderar iniciativas innovadoras?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te atraen las startups y nuevos negocios?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la gerencia y dirección organizacional?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta motivar personas hacia objetivos?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te gustaría trabajar en política o liderazgo social?',
+    riasec: 'E',
+  ),
+  const Pregunta(
+    texto: '¿Te motiva transformar ideas en proyectos reales?',
+    riasec: 'E',
+  ),
+
+  // ═══════════════════════════════════════════
+  // 📋 CONVENCIONAL (C) - 20
+  // ═══════════════════════════════════════════
+
+  const Pregunta(
+    texto: '¿Te gusta organizar documentos y archivos?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Prefieres seguir procedimientos claros y ordenados?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa trabajar con datos y números?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas planificar actividades y horarios?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te consideras detallista y organizado?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la contabilidad o auditoría?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta verificar información cuidadosamente?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te atrae la administración y gestión documental?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta mantener el orden y la estructura?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la logística y procesos administrativos?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta trabajar con cronogramas y presupuestos?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te atrae el control de calidad y normas?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta revisar errores y corregir detalles?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa la gestión pública o institucional?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Disfrutas llevar registros y estadísticas?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta trabajar en ambientes organizados?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Prefieres tareas estructuradas y previsibles?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te interesa el cumplimiento de normas y procesos?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te gusta administrar recursos y materiales?',
+    riasec: 'C',
+  ),
+  const Pregunta(
+    texto: '¿Te consideras disciplinado y metódico?',
+    riasec: 'C',
+  ),
 ];
 
-// ─────────────────────────────────────────────────────────────
-// ✅ FUNCIÓN AUXILIAR: Descripción de perfiles RIASEC
-// ─────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// ✅ DESCRIPCIONES RIASEC
+// ─────────────────────────────────────────────
+
 String getDescripcionRIASEC(String codigo) {
   const descripciones = {
-    'R': 'Realista: Te gusta trabajar con herramientas, máquinas o al aire libre. Eres práctico y prefieres resultados tangibles.',
-    'I': 'Investigador: Disfrutas investigar, analizar y resolver problemas complejos. Eres curioso y orientado al conocimiento.',
-    'A': 'Artístico: Te expresas con creatividad. Valoras la originalidad, el arte y la libertad de expresión.',
-    'S': 'Social: Te motiva ayudar, enseñar o servir a otros. Eres empático y colaborativo.',
-    'E': 'Emprendedor: Te ves liderando, persuadiendo o emprendiendo proyectos. Eres competitivo y orientado a metas.',
-    'C': 'Convencional: Prefieres estructuras claras y procedimientos definidos. Eres detallista y metódico.',
+    'R':
+    'Realista: Perfil práctico, técnico y orientado a la acción concreta.',
+    'I':
+    'Investigador: Perfil analítico, científico y orientado al conocimiento.',
+    'A':
+    'Artístico: Perfil creativo, expresivo e innovador.',
+    'S':
+    'Social: Perfil empático, colaborativo y orientado al servicio.',
+    'E':
+    'Emprendedor: Perfil líder, persuasivo y orientado a metas.',
+    'C':
+    'Convencional: Perfil organizado, estructurado y metódico.',
   };
-  return descripciones[codigo] ?? 'Perfil en construcción';
+
+  return descripciones[codigo] ?? 'Perfil vocacional';
 }
